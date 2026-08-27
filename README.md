@@ -1,4 +1,4 @@
-Flatpak build for offlinechesspuzzles
+Flatpak build for [offlinechesspuzzles](https://github.com/brianch/offline-chess-puzzles)
 
 
 flatpak run org.flatpak.Builder \
