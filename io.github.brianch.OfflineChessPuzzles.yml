@@ -1,0 +1,76 @@
+id: io.github.brianch.OfflineChessPuzzles
+
+runtime: org.freedesktop.Platform
+runtime-version: '25.08'
+sdk: org.freedesktop.Sdk
+
+command: offline-chess-puzzles
+
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+
+build-options:
+  append-path: /usr/lib/sdk/rust-stable/bin
+  env:
+    CARGO_HOME: /run/build/offline-chess-puzzles/cargo
+
+finish-args:
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  - --share=network
+
+modules:
+  - name: offline-chess-puzzles
+    buildsystem: simple
+
+    build-commands:
+      - cargo --offline build --release
+
+      - install -Dm755 target/release/offline-chess-puzzles /app/share/offline-chess-puzzles/offline-chess-puzzles
+
+      - cp -a font /app/share/offline-chess-puzzles/
+
+      - cp -a pieces /app/share/offline-chess-puzzles/
+
+      - cp -a translations /app/share/offline-chess-puzzles/
+
+      - cp -a 1piece.ogg /app/share/offline-chess-puzzles/
+
+      - cp -a 2pieces.ogg /app/share/offline-chess-puzzles/
+
+      - cp -a settings.json /app/share/offline-chess-puzzles/
+
+      - sh -c 'if [ -f .env ]; then cp -a .env /app/share/offline-chess-puzzles/; else touch /app/share/offline-chess-puzzles/.env; fi'
+
+      - sh -c 'if [ -f ocp.db ]; then cp -a ocp.db /app/share/offline-chess-puzzles/; fi'
+
+      - install -Dm755 offline-chess-puzzles-wrapper.sh /app/bin/offline-chess-puzzles
+
+      - install -Dm644 io.github.brianch.OfflineChessPuzzles.desktop /app/share/applications/io.github.brianch.OfflineChessPuzzles.desktop
+
+      - install -Dm644 io.github.brianch.OfflineChessPuzzles.metainfo.xml /app/share/metainfo/io.github.brianch.OfflineChessPuzzles.metainfo.xml
+
+      - install -Dm644 io.github.brianch.OfflineChessPuzzles.svg /app/share/icons/hicolor/scalable/apps/io.github.brianch.OfflineChessPuzzles.svg
+
+    sources:
+      - type: git
+        url: https://github.com/brianch/offline-chess-puzzles.git
+        tag: v2.5.2
+
+      - type: file
+        path: Cargo.lock
+
+      - cargo-sources.json
+
+      - type: file
+        path: offline-chess-puzzles-wrapper.sh
+
+      - type: file
+        path: io.github.brianch.OfflineChessPuzzles.desktop
+
+      - type: file
+        path: io.github.brianch.OfflineChessPuzzles.metainfo.xml
+
+      - type: file
+        path: io.github.brianch.OfflineChessPuzzles.svg

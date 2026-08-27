@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Offline Chess Puzzles
+GenericName=Chess Puzzle Trainer
+Comment=View and solve puzzles from the lichess puzzle database, offline
+Exec=offline-chess-puzzles
+Icon=io.github.brianch.OfflineChessPuzzles
+Terminal=false
+Categories=Game;BoardGame;
+Keywords=chess;puzzle;lichess;tactics;training;
+StartupNotify=true
