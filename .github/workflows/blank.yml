@@ -43,7 +43,14 @@ jobs:
           generate_release_notes: true
           body: |
             Flatpak bundle for offline chess puzzles
+
+            **First install:**
             ```bash
             flatpak install --user OfflineChessPuzzles.flatpak
             flatpak run io.github.brianch.OfflineChessPuzzles
+            ```
+
+            **Already installed? Update to this version:**
+            ```bash
+            flatpak install --user --reinstall OfflineChessPuzzles.flatpak
             ```
